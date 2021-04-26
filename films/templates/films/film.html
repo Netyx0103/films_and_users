@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% if Film.title %}
+        <h1>{{ Film.title }}</h1>
+        <p>{{ Film.description }}</p>
+        <h3>Reviews:</h3><hr \>
+        {% if user.is_authenticated %}
+            <form method="POST">
+                {% csrf_token %}
+                {{ Form.as_p }}
+                <button type="submit">Add review!</button>
+            </form>
+            <hr />
+        {% endif %}
+        {% for review in Review %}
+            <h4>Review by {{ review.author }} at {{ review.date_posted }}</h3>
+            <p>{{ review.content }}</p>
+            {% if review.author == currentuser %}
+            <!-- note: these forms must have these names, otherwise deleting and editing will not work          -->
+            <!-- if you can find some way to give the reviewid to the django without these forms change it :)   -->
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="deleteid" value="{{ review.id }}">
+                    <button type="submit">Delete review</button>
+                </form>
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="reviewid" value="{{ review.id }}">
+                    <input type="text" name="changecontents">
+                    <button type="submit">Edit review</button>
+                </form>
+            {% endif %}
+            <hr />
+        {% endfor %}
+    {% else %}
+        <p>this film doesn't exist</p>
+    {% endif %}
+{% endblock %}
