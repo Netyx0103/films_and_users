@@ -17,5 +17,6 @@ what is working:
 
 what needs to be done:
 - films
+    - the Film class is a placeholder and should be updated. the reviews, essays and comments only need the film id, so it will work as long as theres a Film class.
     - templates look terrible, should be changed to something better looking
     - needs a function that lets users add films. currently films can only be added through the admin page, while reviews, essays and comments can be added by users that are logged in. also maybe add deleting and editing comments? 
